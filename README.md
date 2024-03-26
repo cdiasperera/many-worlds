@@ -38,6 +38,8 @@
 
 ## Requirements & Running
 
+== TODO: put in ==
+
 ### QtCreator
 
 * Open `CMakeLists.txt` inside `QTCreator` and press the play button.
@@ -46,7 +48,16 @@
 
 ### `CMake`
 
-* ==TODO: Robin, can you fill this in==
+Make sure your shell's current directory is at the `src` directory.
+Run the following in your shell:
+```bash
+mkdir build
+cd build
+cmake ..
+make
+```
+Then run the executable that is created inside the build directory.
+
 
 ## Usage
 
