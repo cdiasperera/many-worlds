@@ -90,6 +90,7 @@
 
 * Currently, if there are objects within the world that are in front of the portal, the portal screen will render over it.
 * There is a minor movement bug where after a 270 degree rotation, the left and right movement keys are swapped.
+* The scene being rendered is hard-coded and defined at compile time.
 * The code is not very pretty :pensive:
 
 ## Authors & Acknowledgements
