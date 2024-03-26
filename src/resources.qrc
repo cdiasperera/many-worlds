@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>shaders/fragshader.glsl</file>
+        <file>shaders/portalfragshader.glsl</file>
+        <file>shaders/vertshader.glsl</file>
+        <file>models/cat.obj</file>
+        <file>models/portal.obj</file>
+        <file>textures/cat_diff.png</file>
+        <file>shaders/normalfragshader.glsl</file>
+        <file>shaders/normalvertshader.glsl</file>
+    </qresource>
+</RCC>
