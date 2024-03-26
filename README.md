@@ -71,7 +71,7 @@
   * `ZX` to hover up and down
   * `QE` to pan left and right
   * `RF` to tilt up and down
-* To switch scenes, change `currentScene` to `Scene::createSceneN()`, where `N` is from `0` to `3`, in `mainview.h`.
+* To view scene `N`, change `MainView::currentScene` to be initialized to `Scene::createSceneN()`, where `N` is from `0` to `3`, in `mainview.h`.
 * Moving through a portal places you inside that portal's world. Moving through any portal takes you back to the "home" (i.e: default) world.
 
 ## How does this work?
