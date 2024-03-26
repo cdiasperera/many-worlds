@@ -6,57 +6,62 @@
 
 ## Showcase
 
-### Scene 1
+### Scene 0
 
-==TODO: Place GIF of what is happening==
+![Scene 0](./doc-assets/scene0.gif)
 
 * Here, we see a simple portal, where the cat inside the world is somewhat bigger.
 
-### Scene 2
+### Scene 1
 
-==TODO: Place GIF of what is happening==
+![Scene 1](./doc-assets/scene1.gif)
 
 * Here, we see a world under some affine transformation. We support arbitrary affine transformations, when defining new worlds. In principle, you can even make a new transformation at runtime!
 
-### Scene 3
+### Scene 2
 
-==TODO: Place GIF of what is happening==
+![Scene 2](./doc-assets/scene2.gif)
 
 * Here, we see a world being rendered with a different shader. We support arbitrary shader definitions, though such shader definitions must be present at compilation.
 
-### Scene 4
+### Scene 3
 
-==TODO: Place GIF of what is happening==
+![Scene 3](./doc-assets/scene3.gif)
 
 * Here, we see that an arbitrary number of portals can be placed into a scene and each portal previews it's own respective world correctly.
 
 ### Home Portal Preview
 
-==TODO: Place GIF of what is happening==
+![Home Preview](./doc-assets/home-preview.gif)
 
 * Here, we see that after entering a portal, all other portals preview (and take us back to) the home world.
 
 ## Requirements & Running
 
-== TODO: put in ==
+* OpenGL (>=3.3)
+* Qt (>= 6.2)
+* QtCreator (Optional)
 
 ### QtCreator
 
 * Open `CMakeLists.txt` inside `QTCreator` and press the play button.
 
-  ![Starting the Application in QTCreator](./doc-assets/qt-start.gif)
+  ![6](./doc-assets/qt-start.gif)
 
 ### `CMake`
 
-Make sure your shell's current directory is at the `src` directory.
-Run the following in your shell:
-```bash
-mkdir build
-cd build
-cmake ..
-make
-```
-Then run the executable that is created inside the build directory.
+* Make sure your shell's current directory is at the `src` directory.
+
+* Run the following in your shell:
+
+  ```bash
+  mkdir build
+  cd build
+  cmake ..
+  make
+  ```
+
+* Then run the executable that is created inside the build directory.
 
 
 ## Usage
@@ -66,7 +71,7 @@ Then run the executable that is created inside the build directory.
   * `ZX` to hover up and down
   * `QE` to pan left and right
   * `RF` to tilt up and down
-  * `1`, `2`, `3`, `4` to switch to scenes 1, 2, 3, 4 respectively.
+* To switch scenes, change `currentScene` to `Scene::createSceneN()`, where `N` is from `0` to `3`, in `mainview.h`.
 * Moving through a portal places you inside that portal's world. Moving through any portal takes you back to the "home" (i.e: default) world.
 
 ## How does this work?

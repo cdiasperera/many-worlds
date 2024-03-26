@@ -85,7 +85,7 @@ private:
     QMatrix4x4 projectionTransform;
 
     // Scenes
-    Scene scene;
+    Scene currentScene = Scene::createScene3();
 
     bool inPortal = false;
 

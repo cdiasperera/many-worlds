@@ -5,10 +5,12 @@
 #include "model.h"
 
 MainView::MainView(QWidget *parent) : QOpenGLWidget(parent) {
-  qDebug() << "MainView constructor";
+    qDebug() << "MainView constructor";
 
-  connect(&timer, SIGNAL(timeout()), this, SLOT(update()));
-  timer.start(1000 / FPS);
+    setFocus();
+
+    connect(&timer, SIGNAL(timeout()), this, SLOT(update()));
+    timer.start(1000 / FPS);
 }
 
 MainView::~MainView() {
@@ -49,56 +51,25 @@ void MainView::initializeGL() {
   // color.
   glClearColor(0.37f, 0.42f, 0.45f, 0.0f);
 
-  scene.texturedObjects.emplace_back(QVector3D{0,0,-10});
-  scene.texturedObjects.emplace_back(QVector3D{10,0,-10});
-  scene.texturedObjects.emplace_back(QVector3D{-10,0,-10});
-
-  // Portal 1 - Simple scaling
-  QMatrix4x4 portal1Effect;
-  portal1Effect.setToIdentity();
-  portal1Effect.scale(3);
-  scene.portalObjects.push_back({
-        QVector3D{0,0,0},
-        portal1Effect
-  });
-
-  // Portal 2 - Complex affine
-  QMatrix4x4 portal2Effect;
-  portal2Effect.setToIdentity();
-  portal2Effect.scale(.5);
-  scene.portalObjects.push_back({
-        QVector3D{10,0,0},
-        portal2Effect
-  });
-
-  // Portal 3 - Normal Map
-  QMatrix4x4 portal3Effect;
-  portal3Effect.setToIdentity();
-  scene.portalObjects.push_back({
-                                 QVector3D{-10,0,0},
-                                 portal3Effect,
-                                 ShaderType::NORMAL
-  });
-
   createShaderProgram(shaders[ShaderType::PHONG], ":/shaders/vertshader.glsl", ":/shaders/fragshader.glsl");
   createShaderProgram(shaders[ShaderType::NORMAL], ":/shaders/normalvertshader.glsl", ":/shaders/normalfragshader.glsl");
   createShaderProgram(shaders[ShaderType::PORTAL], ":/shaders/vertshader.glsl", ":/shaders/portalfragshader.glsl");
-  for (auto &to : scene.texturedObjects) {
+  for (auto &to : currentScene.texturedObjects) {
       loadIntoSceneObject(":/models/cat.obj", to, ":/textures/cat_diff.png");
   }
 
-  for (auto &po : scene.portalObjects) {
+  for (auto &po : currentScene.portalObjects) {
       loadIntoSceneObject(":/models/portal.obj", po);
   }
 
   // Initialize transformations
   updateProjectionTransform();
 
-  for (auto &to : scene.texturedObjects) {
+  for (auto &to : currentScene.texturedObjects) {
       updateModelTransforms(to);
   }
 
-  for (auto &po : scene.portalObjects) {
+  for (auto &po : currentScene.portalObjects) {
       updateModelTransforms(po);
   }
 
@@ -134,7 +105,7 @@ void MainView::paintScene() {
 
     // Transformation Constants
 
-    for (auto &to : scene.texturedObjects) {
+    for (auto &to : currentScene.texturedObjects) {
         QMatrix4x4 meshWithNoEffectTransform = to.modelTransform * currentWorldEffectTransform;
         shaderProgram.setUniformValue("projectionTransform", projectionTransform);
         shaderProgram.setUniformValue("modelViewTransform", meshWithNoEffectTransform);
@@ -166,9 +137,9 @@ void MainView::paintGL() {
 
   int stencilVal = 1;
 
-  for (auto &po : scene.portalObjects) {
+  for (auto &po : currentScene.portalObjects) {
       setPortalStencil(po, stencilVal);
-      for (auto &to : scene.texturedObjects) {
+      for (auto &to : currentScene.texturedObjects) {
           glStencilFunc(GL_EQUAL, stencilVal, 0xFF);
           paintMeshWithPortalEffectAtStencil(to, po);
       }
@@ -192,13 +163,13 @@ void MainView::resizeGL(int newWidth, int newHeight) {
 void MainView::updateCameraPosition() {
     camera.update(keyboardStatus);
 
-    for (auto &po : scene.portalObjects) {
+    for (auto &po : currentScene.portalObjects) {
         updatePortalEffectTransforms(po);
         updateModelTransforms(po);
     }
 
 
-    for (auto &to : scene.texturedObjects) {
+    for (auto &to : currentScene.texturedObjects) {
         updateModelTransforms(to);
     }
 
@@ -215,12 +186,12 @@ void MainView::updateProjectionTransform() {
 }
 
 void MainView::destroyModelBuffers() {
-    for (auto &to : scene.texturedObjects) {
+    for (auto &to : currentScene.texturedObjects) {
         cleanUpSceneObject(to);
         glDeleteTextures(1, &to.texture);
     }
 
-    for (auto &po : scene.portalObjects) {
+    for (auto &po : currentScene.portalObjects) {
         cleanUpSceneObject(po);
     }
 
