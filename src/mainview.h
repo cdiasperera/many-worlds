@@ -1,7 +1,6 @@
 #ifndef MAINVIEW_H
 #define MAINVIEW_H
 
-#include <KeyboardStatus.h>
 #include <QKeyEvent>
 #include <QMatrix4x4>
 #include <QMouseEvent>
@@ -12,12 +11,13 @@
 #include <QTimer>
 #include <QVector3D>
 
+#include "keyboardstatus.h"
 #include "camera.h"
 #include "sceneobject.h"
 #include "texturedobject.h"
 #include "portalobject.h"
 #include "scene.h"
-#include "shadertype.h"
+#include "ShaderType.h"
 
 /**
  * @brief The MainView class is resonsible for the actual content of the main
