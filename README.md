@@ -6,6 +6,8 @@
 
 ## Showcase
 
+* Note that each scene has an accompanying `.gif`, but it may take some time to load them on this page.
+
 ### Scene 0
 
 ![Scene 0](./doc-assets/scene0.gif)
